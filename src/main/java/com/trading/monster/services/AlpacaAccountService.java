@@ -1,22 +1,33 @@
-import com.fasterxml.jackson.core.JsonParser;
+package com.trading.monster.services;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trading.monster.domain.AlpacaAccount;
 import com.trading.monster.domain.CalendarDay;
+import com.trading.monster.repositories.AlpacaAccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class GetCalendar {
-    public static void main(String[] args) {
+@Service
+public class AlpacaAccountService {
+    @Autowired
+    AlpacaAccountRepository alpacaAccountRepository;
+
+    public void savaAccount(AlpacaAccount account){
+        alpacaAccountRepository.save(account);
+    }
+
+    public void getAlpacaAccount(){
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.alpaca.markets/v2/calendar"))
+                .uri(URI.create("https://api.alpaca.markets/v2/account"))
                 .header("APCA-API-KEY-ID", "AK5S1P2OGBCPIZDZWER3")
                 .header("APCA-API-SECRET-KEY", "vPQUEJeuOUNgARBNXOmUS1gD2R4s3aiTUBN87bm7")
                 .header("Content-Type", "application/json")
@@ -34,12 +45,14 @@ public class GetCalendar {
 
         String json=response.body().toString();
         final ObjectMapper objectMapper = new ObjectMapper();
-        List<CalendarDay> calendar = null;
+        AlpacaAccount account = null;
         try {
-            calendar = objectMapper.readValue(json, new TypeReference<List<CalendarDay>>(){});
+            account = objectMapper.readValue(json, new TypeReference<AlpacaAccount>(){});
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(calendar.size());
+
+        alpacaAccountRepository.save(account);
+        System.out.println(account);
     }
 }
