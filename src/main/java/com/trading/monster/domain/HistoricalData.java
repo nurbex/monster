@@ -5,17 +5,17 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
-public class HIstoricalData {
+public class HistoricalData {
     @Id
-    AlpacaAsset ticker;
+    String ticker;
 
     List<OneMinuteBar> historicalData;
 
-    public AlpacaAsset getTicker() {
+    public String getTicker() {
         return ticker;
     }
 
-    public void setTicker(AlpacaAsset ticker) {
+    public void setTicker(String ticker) {
         this.ticker = ticker;
     }
 

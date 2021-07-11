@@ -3,6 +3,7 @@ package com.trading.monster.controllers;
 import com.trading.monster.services.AlpacaAccountService;
 import com.trading.monster.services.AlpacaAssetService;
 import com.trading.monster.services.CalendarService;
+import com.trading.monster.services.HistoricalDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ public class HomeController {
 
     @Autowired
     AlpacaAssetService alpacaAssetService;
+
+    @Autowired
+    HistoricalDataService historicalDataService;
 
     @GetMapping
     public String getHomePage(){
