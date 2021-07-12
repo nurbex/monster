@@ -51,6 +51,6 @@ public class AlpacaAccountService {
         }
 
         alpacaAccountRepository.save(account);
-        System.out.println(account);
+        System.out.println(json);
     }
 }

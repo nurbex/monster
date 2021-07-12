@@ -1,29 +1,26 @@
 package com.trading.monster.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import java.util.List;
 
-@Entity
 public class HistoricalData {
-    @Id
-    String ticker;
 
-    List<OneMinuteBar> historicalData;
+    List<OneMinuteBar> AAPL;
 
-    public String getTicker() {
-        return ticker;
+    @JsonAlias({ "AAPL" })
+    public List<OneMinuteBar> getAAPL() {
+        return AAPL;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setAAPL(List<OneMinuteBar> AAPL) {
+        this.AAPL = AAPL;
     }
 
-    public List<OneMinuteBar> getHistoricalData() {
-        return historicalData;
-    }
-
-    public void setHistoricalData(List<OneMinuteBar> historicalData) {
-        this.historicalData = historicalData;
+    @Override
+    public String toString() {
+        return "HistoricalData{" +
+                "AAPL=" + AAPL +
+                '}';
     }
 }

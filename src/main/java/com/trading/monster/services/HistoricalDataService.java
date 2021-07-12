@@ -1,11 +1,13 @@
 package com.trading.monster.services;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trading.monster.domain.AlpacaAccount;
+import com.trading.monster.domain.AlpacaAsset;
 import com.trading.monster.domain.HistoricalData;
-import com.trading.monster.repositories.HistoricalDataRepository;
+import com.trading.monster.domain.OneMinuteBar;
+import com.trading.monster.repositories.OneMinuteBarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +16,21 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Service
 public class HistoricalDataService {
 
     @Autowired
-    HistoricalDataRepository historicalDataRepository;
+    OneMinuteBarRepository oneMinuteBarRepository;
 
-    public void saveAsset(HistoricalData historicalData){
-        historicalDataRepository.save(historicalData);
+    public void saveData(OneMinuteBar oneMinuteBar){
+        oneMinuteBarRepository.save(oneMinuteBar);
     }
 
     public void getOneMinBars(){
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.alpaca.markets/v2/account"))
+                .uri(URI.create("https://data.alpaca.markets/v1/bars/1Min?symbols=AAPL&limit=1000&start&end&after&until"))
                 .header("APCA-API-KEY-ID", "AK5S1P2OGBCPIZDZWER3")
                 .header("APCA-API-SECRET-KEY", "vPQUEJeuOUNgARBNXOmUS1gD2R4s3aiTUBN87bm7")
                 .header("Content-Type", "application/json")
@@ -43,15 +46,20 @@ public class HistoricalDataService {
         }
         //System.out.println(response.body());
 
-        String json=response.body().toString();
+        String json=response.body();
+        //System.out.println(json);
+
         final ObjectMapper objectMapper = new ObjectMapper();
-        HistoricalData historicalData = null;
+        HistoricalData AAPL;
         try {
-            historicalData = objectMapper.readValue(json, new TypeReference<HistoricalData>(){});
+            AAPL = objectMapper.readValue(json, HistoricalData.class);
+            System.out.println(AAPL.toString());
+
+            for (OneMinuteBar oneMinuteBar: AAPL.getAAPL()) {
+                oneMinuteBarRepository.save(oneMinuteBar);
+            }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-        historicalDataRepository.save(historicalData);
     }
 }

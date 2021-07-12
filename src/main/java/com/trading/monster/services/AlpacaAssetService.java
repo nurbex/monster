@@ -55,11 +55,8 @@ public class AlpacaAssetService {
         int i=0;
         for (AlpacaAsset asset: assets) {
             i++;
-/*            if(i<3000){
-                System.out.println(i+" "+asset.toString());
-            }*/
             // added this assets by hand 3400 and 2066
-            if((i!=3400)&(i!=2066)){
+            if((i!=3377)&(i!=2276)){
                 System.out.println(i+" "+asset.toString());
                 alpacaAssetRepository.save(asset);
             }

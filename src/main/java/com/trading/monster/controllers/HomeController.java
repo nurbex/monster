@@ -29,6 +29,7 @@ public class HomeController {
         //calendarService.getAlpacaCalendar();
         //alpacaAccountService.getAlpacaAccount();
         //alpacaAssetService.getAssets();
+        historicalDataService.getOneMinBars();
         return "home_page";
     }
 }
