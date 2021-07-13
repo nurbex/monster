@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -29,7 +32,10 @@ public class HomeController {
         //calendarService.getAlpacaCalendar();
         //alpacaAccountService.getAlpacaAccount();
         //alpacaAssetService.getAssets();
-        historicalDataService.getOneMinBars();
+
+        System.out.println(LocalDateTime.parse("2021-07-08T08:30:00"));
+        historicalDataService.getOneMinBars(LocalDate.parse("2021-07-08"));
+
         return "home_page";
     }
 }

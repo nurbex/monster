@@ -1,6 +1,7 @@
 package com.trading.monster.domain;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class HistoricalData {
 
     List<OneMinuteBar> AAPL;
 
-    @JsonAlias({ "AAPL" })
+    @JsonGetter("AAPL")
     public List<OneMinuteBar> getAAPL() {
         return AAPL;
     }
