@@ -34,7 +34,7 @@ public class HomeController {
         //alpacaAssetService.getAssets();
 
         System.out.println(LocalDateTime.parse("2021-07-08T08:30:00"));
-        historicalDataService.getOneMinBars(LocalDate.parse("2021-07-08"));
+        historicalDataService.getOneMinBars(LocalDate.parse("2021-07-01"));
 
         return "home_page";
     }

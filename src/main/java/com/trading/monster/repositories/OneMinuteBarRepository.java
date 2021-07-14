@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface OneMinuteBarRepository extends JpaRepository<OneMinuteBar, Long> {
+public interface OneMinuteBarRepository extends JpaRepository<OneMinuteBar, String> {
 }
